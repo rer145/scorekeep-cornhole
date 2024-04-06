@@ -1,0 +1,20 @@
+---
+import Header from "../components/Header.astro";
+import DefaultLayout from "../layouts/DefaultLayout.astro";
+
+const { game } = Astro.props;
+const winningTeamName = game.team1.score > game.team2.score ? game.team1.name : game.team2.name;
+const winningScore = game.team1.score > game.team2.score ? game.team1.score : game.team2.score;
+const losingScore = game.team2score > game.team1.score ? game.team2.score : game.team1.score;
+---
+
+<DefaultLayout>
+	<Header />
+
+	<h2>{winningTeamName}</h2>
+	<h3>wins {winningScore}-{losingScore}</h3>
+
+	<div>
+		<a href="/new" role="button">New Game</a>
+	</div>
+</DefaultLayout>

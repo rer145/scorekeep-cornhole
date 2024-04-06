@@ -1,0 +1,73 @@
+---
+export const prerender = true;
+
+import Header from "../components/Header.astro";
+import DefaultLayout from "../layouts/DefaultLayout.astro";
+---
+
+<DefaultLayout>
+	<Header />
+
+	<form method="post">
+		<div>
+			<label for="team1Name">Team 1</label>
+			<div>
+				<input type="text" id="team1Name" name="team1Name" value="Team 1" /> 
+				<input type="color" id="team1Color" name="team1Color" width="10" value="#FF0000" />
+			</div>
+		</div>
+
+		<div>
+			<label for="team2Name">Team 2</label>
+			<div>
+				<input type="text" id="team2Name" name="team2Name" value="Team 2" /> 
+				<input type="color" id="team2Color" name="team2Color" width="10" value="#0000FF" />
+			</div>
+		</div>
+
+		<div>
+			<label for="playTo">Play to:</label>
+			<input type="number" id="playTo" name="playTo" value="21" />
+		</div>
+
+		<div>
+			<label for="winBy">Win by:</label>
+			<input type="number" id="winBy" name="winBy" value="2" />
+		</div>
+
+		<div>
+			<button type="submit" id="submit" name="submit">Start Game</button>
+		</div>
+	</form>
+</DefaultLayout>
+
+<script is:inline>
+	document.addEventListener('DOMContentLoaded', async (event) => {
+		
+	});
+
+	document.getElementById('submit').addEventListener('click', (event) => {
+		event.preventDefault();
+
+		const game = {
+			team1: {
+				name: document.getElementById('team1Name').value,
+				color: document.getElementById('team1Color').value,
+				score: 0
+			},
+			team2: {
+				name: document.getElementById('team2Name').value,
+				color: document.getElementById('team2Color').value,
+				score: 0
+			},
+			settings: {
+				playTo: Number(document.getElementById('playTo').value),
+				winBy: Number(document.getElementById('winBy').value)
+			}
+		};
+
+		localStorage.setItem('cornhole-game', JSON.stringify(game));
+
+		window.location.href = '/game';
+	});
+</script>

@@ -1,0 +1,75 @@
+---
+const { team, opponent } = Astro.props;
+---
+
+<div>
+    <div>
+        <h2 id="teamName"></h2>
+        <h2 id="teamScore"></h2>
+    </div>
+    <div>
+        <button type="button" id="addBoard" name="addBoard" value="1">+</button>
+        <h3><span id="numBoards">0</span> Boards</h3>
+        <button type="button" id="removeBoard" name="removeBoard" value="-1">-</button>
+    </div>
+    <div>
+        <button type="button" id="addHole" name="addHole" value="3">+</button>
+        <h3><span id="numHoles">0</span> Holes</h3>
+        <button type="button" id="removeHole" name="removeHole" value="-3">-</button>
+    </div>
+</div>
+
+<script is:inline define:vars={{team, opponent}}>
+    const teamName = document.querySelector('#teamName');
+    const teamScore = document.querySelector('#teamScore');
+
+    const addBoard = document.querySelector('#addBoard');
+    const addHole = document.querySelector('#addHole');
+    const removeBoard = document.querySelector('#removeBoard');
+    const removeHole = document.querySelector('#removeHole');
+
+    const numBoards = document.querySelector('#numBoards');
+    const numHoles = document.querySelector('#numHoles');
+
+    let game = {};
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        game = JSON.parse(localStorage.getItem('cornhole-game'));
+        if (game) {
+            teamName.innerHTML = game[team].name;
+            teamScore.innerHTML = game[team].score;
+        }
+    });
+
+    addBoard.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        let cnt = Number(numBoards.textContent);
+
+        numBoards.textContent = cnt++;
+    });
+
+    removeBoard.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        let cnt = Number(numBoards.textContent);
+
+        numBoards.textContent = cnt--;
+    });
+
+    addHole.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        let cnt = Number(numHoles.textContent);
+
+        numHoles.textContent = cnt++;
+    });
+
+    removeHole.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        let cnt = Number(numHoles.textContent);
+
+        numHoles.textContent = cnt--;
+    });
+</script>

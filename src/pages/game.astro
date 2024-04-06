@@ -1,0 +1,34 @@
+---
+export const prerender = true;
+
+import Header from "../components/Header.astro";
+import TeamScoreEntry from "../components/TeamScoreEntry.astro";
+import DefaultLayout from "../layouts/DefaultLayout.astro";
+
+const { game } = Astro.props;
+---
+
+<DefaultLayout>
+	<Header />
+
+	<TeamScoreEntry team={"team1"} opponent={"team2"} />
+
+	<div>
+		<button id="nextRound" name="nextRound">Next Round</button>
+	</div>
+
+	<TeamScoreEntry team={"team2"} opponent={"team1"} />
+</DefaultLayout>
+
+<script is:inline>
+	document.addEventListener('DOMContentLoaded', async (event) => {
+		document.querySelector('#nextRound').addEventListener('click', (event) => {
+			event.preventDefault();
+
+			// update local storage with scores
+			// clear numBoards/numHoles for each team
+			// if score of a team meets game end criteria, redirect to finish
+			window.location.href = '/final.astro';
+		});
+	});
+</script>
